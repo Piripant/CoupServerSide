@@ -7,6 +7,7 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
+    fmt.Printf("Some one connected to a web page, babe!")
     fmt.Fprintf(w, "Hi from a server, hosted by buff!")
 }
 
