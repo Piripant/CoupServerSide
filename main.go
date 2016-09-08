@@ -3,6 +3,7 @@ package main
 import (
     "fmt"
     "net/http"
+    "os"
 )
 
 type server struct {
@@ -45,6 +46,8 @@ func reset_time_life() {
 
 func main() {
     fmt.Printf("Starting the server, beep beep boop")
+    port := os.Getenv("PORT")
+
     http.HandleFunc("/coupfps", handler)
-    http.ListenAndServe(":8080", nil)
+    http.ListenAndServe(":" + port, nil)
 }
