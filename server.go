@@ -2,8 +2,8 @@ package main
 
 import (
     "fmt"
-    "time"
     "net/http"
+    "os"
 )
 
 type server struct {
@@ -94,5 +94,6 @@ func main() {
     
     fmt.Printf("Server checker started\n")
     
-    http.ListenAndServe(":8080", nil)
+    port := os.Getenv("PORT")
+    http.ListenAndServe(":" + port, nil)
 }
