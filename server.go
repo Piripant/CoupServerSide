@@ -20,30 +20,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintf(w, "Hi from a server, hosted by buff!")
 }
 
-func add_server(w http.ResponseWriter, r *http.Request) {
-    fields := []string{"name", "ip", "port"}
-    var s_info [3]string
-
-    for i := 0; i < len(fields); i++ {
-        s_info[i] = r.URL.Query().Get(fields[i])
-
-        if s_info[i] == "" {
-            // The field is missing
-            fmt.Printf("Bad add request received")
-            return
-        }
-    }
-
-    new_server := server {s_info[0], s_info[1], s_info[2], true}
-    server_list = append(server_list, new_server)
-}
 
 // Resets a server as online
-func reset_server (w http.ResponseWriter, r *http.Request) {
-    server_ip := r.URL.Query().Get("ip")
-    server_port := r.URL.Query().Get("port")
+func reset_server(w http.ResponseWriter, r *http.Request) {
+    server_name :=  r.URL.Query().Get("n")
+    server_ip := r.URL.Query().Get("i")
+    server_port := r.URL.Query().Get("p")
     
-    if server_ip == "" || server_port == "" {
+    if server_name == "" || server_ip == "" || server_port == "" {
+        fmt.Printf("Bad refresh request received")
         return
     }
     
@@ -53,6 +38,10 @@ func reset_server (w http.ResponseWriter, r *http.Request) {
             return
         }
     }
+
+    // There was no server with that data
+    new_server := server {server_name, server_ip, server_port, true}
+    server_list = append(server_list, new_server)
 }
 
 func display_servers(w http.ResponseWriter, r *http.Request) {
@@ -86,7 +75,6 @@ func main() {
     
     http.HandleFunc("/coupfps", handler)
     http.HandleFunc("/display", display_servers)
-    http.HandleFunc("/add", add_server)
     http.HandleFunc("/reset", reset_server)
     
     fmt.Printf("Web pages handlers initializated\n")
