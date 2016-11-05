@@ -17,7 +17,7 @@ type server struct {
 var server_list []server
 
 func handler(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "Hi from a server, hosted by buff!")
+    fmt.Fprintf(w, "Seems that the server is up and running!")
 }
 
 
@@ -28,7 +28,7 @@ func reset_server(w http.ResponseWriter, r *http.Request) {
     server_port := r.URL.Query().Get("p")
     
     if server_name == "" || server_ip == "" || server_port == "" {
-        fmt.Printf("Bad refresh request received")
+        fmt.Printf("Bad refresh request received\n")
         return
     }
     
@@ -42,6 +42,8 @@ func reset_server(w http.ResponseWriter, r *http.Request) {
     // There was no server with that data
     new_server := server {server_name, server_ip, server_port, true}
     server_list = append(server_list, new_server)
+
+    fmt.Printf("Server added\n");
 }
 
 func display_servers(w http.ResponseWriter, r *http.Request) {
