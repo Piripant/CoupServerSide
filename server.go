@@ -36,7 +36,7 @@ func reset_server(w http.ResponseWriter, r *http.Request) {
     
     for i := 0; i < len(server_list); i++ {
         if server_list[i].ip == server_ip && server_list[i].port == server_port {
-            server_list[i].players = players
+            server_list[i].players = server_players
             server_list[i].online = true
             return
         }
